@@ -1,1 +1,0 @@
-export let name = "garima vashsitha";
