@@ -31,8 +31,24 @@ http.createServer((req, res) => {
             let dataString = "my name is " + readableData.name+" and my email is "+ readableData.email;
 
             console.log(dataString);
-            fs.appendFileSync("../text/" + readableData.name+".txt", dataString);
-            console.log("file created");
+
+            //create file synchronous
+
+            // fs.appendFileSync("../text/" + readableData.name+".txt", dataString);
+            // console.log("file created");
+
+            //create file asynchronous 
+
+            fs.appendFile("../text/"+readableData.name+".txt", dataString,'utf-8',(err)=>{
+              if(err){
+                console.log(" Error while saving file — sending status 500");
+                res.writeHead(500,{"Content-Type": "plain/html"})
+                res.end("internal server error");
+                return false;
+              }else{
+                console.log("file created successfully...")
+              }
+            })
         })
         res.write('<h1> Data submitted<h1/>')
 
